@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:path/path.dart' as p;
 import 'package:test/test.dart';
 
 import 'utils.dart';
@@ -17,13 +16,6 @@ void expectBuildCleanImpl(
     throw ArgumentError.value(command, 'customCommand', 'Cannot be empty');
   }
 
-  final repoRoot =
-      _runProc('git', ['rev-parse', '--show-toplevel'], workingDir);
-  final pkgDir = p.join(repoRoot, packageRelativeDirectory);
-  if (!p.equals(pkgDir, workingDir)) {
-    throw StateError('Expected the git root ($repoRoot) '
-        'to match the current directory ($workingDir).');
-  }
 
   // 1 - get a list of modified files files - should be empty
   expect(_changedGeneratedFiles(workingDir), isEmpty);
